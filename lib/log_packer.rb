@@ -6,9 +6,11 @@ require "log_packer/railtie" if defined?(Rails)
 module LogPacker
   # RAILS_ROOT/log/*.log
   #
-  @@log_path = []
+  @@log_filenames = []
+  mattr_accessor :log_filenames
   
-  mattr_accessor :log_path
   
+  @@log_dirs = []
+  mattr_accessor :log_dirs
   
 end
