@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = LogPacker::VERSION
   spec.authors       = ["yakjuly"]
   spec.email         = ["yakjuly@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Log Packer is a tool to package rails log to log/archive folder}
+  spec.summary       = %q{Ususally work with whenever to archive log every night}
   spec.homepage      = ""
   spec.license       = "MIT"
 
