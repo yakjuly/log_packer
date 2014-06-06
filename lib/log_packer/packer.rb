@@ -2,8 +2,6 @@ require "fileutils"
 
 module LogPacker
   class Packer
-    
-    extend FileUtils
 
     class << self
       # Functions
@@ -20,7 +18,8 @@ module LogPacker
       end
 
       def last_dir(logfile)
-        last_dir = File.dirname(logfile) + '/last/'
+        log_path = File.directory?(logfile) ? logfile : File.dirname(logfile)
+        last_dir = log_path + '/last/'
         FileUtils.mkdir(last_dir) unless File.directory?(last_dir)
         last_dir
       end
@@ -34,10 +33,10 @@ module LogPacker
           archive_file = archive_path(logfile)
           last_dir = last_dir(logfile)
           puts "Copying #{logfile} to #{archive_file}.bz2"
-          cp logfile, "#{archive_file}"
+          FileUtil.cp logfile, "#{archive_file}"
           truncate logfile
           system "bzip2 #{archive_file}"
-          system "cd #{last_dir} && rm -f *.bz2 && ln -sf #{archive_file}.bz2 ."
+          system "cd #{last_dir} && ln -sf #{archive_file}.bz2 ."
         end
       end
     end

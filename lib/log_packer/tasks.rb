@@ -7,22 +7,24 @@ namespace :log_packer do
     puts " Logrotate starting at #{Time.now.strftime '%Y-%m-%d %H:%M:%S'}"
     puts "==========================================="
     
-    log_filenames = Array(LogPacker.log_filenames).map(&:to_s)
-    log_dirs = Array(LogPacker.log_dirs)
+    log_filenames = LogPacker.log_filenames.map(&:to_s)
+    log_dirs = LogPacker.log_dirs
     
-    log_dirs.each do |logdir|
-      puts "Rotating: #{logdir}"
-      Dir.glob(logdir).each do |filename|
-        next if log_filenames.include?(filename)
-        LogPacker::Packer.rotate filename
-      end
+    
+    total_filenames = (Dir[*log_dirs] + log_filenames).uniq
+    parent_dir_names = total_filenames.map{|filename| File.basename(filename) }.uniq
+    
+    #clear /last
+    parent_dir_names.each do |dirname|
+      PackLoger.last_dir(dirname)
+      system "cd #{dirname} && rm -f *.bz2"
     end
     
-    log_filenames.each do |logfile|
+    total_filenames.each do |logfile|
       puts "Rotating: #{logfile}"
       LogPacker::Packer.rotate logfile
     end
-
+    
     puts "==========================================="
     puts " Logrotate stopted at #{Time.now.strftime '%Y-%m-%d %H:%M:%S'}"
     puts "==========================================="
