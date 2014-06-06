@@ -1,5 +1,7 @@
 
 namespace :log_packer do
+  
+  desc "Archive Log by configuration LogPacker.log_path = [ Rails.root.join('log/*.log') ]"
   task :archive_log => :environment do
     
     puts "==========================================="
