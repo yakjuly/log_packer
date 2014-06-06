@@ -23,6 +23,6 @@
 #with Whenever
   ```
   every :day, at: "1:00 am" do
-    rake "log_packer:archive_log"
+    rake "log_packer:archive"
   end
   ```
