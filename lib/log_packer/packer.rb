@@ -6,7 +6,7 @@ module LogPacker
     class << self
       # Functions
       def truncate(file)
-        File.open(file, 'w') { |f| f.write '' }
+        `echo '' > #{file}`
       end
 
       def archive_path(logfile)
